@@ -1,4 +1,11 @@
 <?php
+include_once 'includes/db_connect.php';
+include_once 'includes/functions.php';
+
+sec_session_start();
+?>
+<?php if (login_check($mysqli) == true) : ?>
+<?php
     require_once('config.php');
     require(constant('HOCKEY_INCLUDE_DIR'));
     
@@ -197,7 +204,7 @@
                           echo "<b>Released:</b> " . date('m/d/Y H:i:s', $app[AppUpdater::INDEX_DATE]);
                     ?>
                         </p>
-	                    <div style='clear:both;'></div>
+                        <div style='clear:both;'></div>
                         <?php if (isset($app[AppUpdater::INDEX_PROFILE]) && $app[AppUpdater::INDEX_PROFILE]) { ?>                    
                         <a class="button" href="<?php echo $b . 'api/2/apps/' . $app[AppUpdater::INDEX_DIR] ?>?format=mobileprovision">Install Profile</a>
                     <?php } ?>
@@ -353,5 +360,12 @@
             !window.location.hash &&
             setTimeout(function () { window.scrollTo(0, 1); }, 2000);
         </script>
+    </body>
+</html>          
+        <?php else : ?>
+            <p>
+                <span class="error">You are not authorized to access this page.</span> Please <a href="login.php">login</a>.
+            </p>
+        <?php endif; ?>
     </body>
 </html>
